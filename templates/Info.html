@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disease Information - Fasal Arogya</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #2ecc71;
+      --primary-dark: #27ae60;
+      --secondary-color: #3498db;
+      --danger-color: #e74c3c;
+      --warning-color: #f39c12;
+      --text-dark: #2c3e50;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--text-dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+      color: white;
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow-lg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 0.25rem;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 73px;
+      z-index: 99;
+    }
+
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      display: inline-block;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    nav a:hover::after {
+      width: 80%;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0 2rem 3rem;
+    }
+
+    .page-title {
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+    }
+
+    .page-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .page-title p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    .diseases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .disease-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease;
+      border-top: 4px solid var(--primary-color);
+    }
+
+    .disease-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .disease-card.disease {
+      border-top-color: var(--danger-color);
+    }
+
+    .disease-card.healthy {
+      border-top-color: var(--primary-color);
+    }
+
+    .disease-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .disease-icon {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .disease-card h3 {
+      color: var(--text-dark);
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+
+    .disease-type {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    .disease-type.disease {
+      background: #fee;
+      color: var(--danger-color);
+    }
+
+    .disease-type.healthy {
+      background: #efe;
+      color: var(--primary-color);
+    }
+
+    .disease-card p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .disease-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .disease-card li {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .disease-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    footer {
+      background: rgba(26, 26, 46, 0.95);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-quote {
+      font-style: italic;
+      opacity: 0.9;
+      margin: 0.5rem 0;
+      font-size: 1.05rem;
+    }
+
+    @media (max-width: 768px) {
+      .diseases-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title h2 {
+        font-size: 2rem;
+      }
+
+      .disease-card {
+        padding: 1.5rem;
+      }
+
+      .nav-content {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      nav a {
+        padding: 0.8rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">🌱</div>
+      <div>
+        <h1>Fasal Arogya</h1>
+        <div class="subtitle">Advanced Plant Disease Detection System</div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-content">
+      <a href="{{ url_for('Home') }}">Home</a>
+      <a href="{{ url_for('About') }}">About Us</a>
+      <a href="{{ url_for('Info') }}">Disease Info</a>
+      <a href="{{ url_for('Login') }}">Login</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-title">
+      <h2>Plant Disease Information & Treatment</h2>
+      <p>Comprehensive guide to identifying and treating crop diseases</p>
+    </div>
+
+    <div class="diseases-grid">
+      <!-- Pepper Diseases -->
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🌶️</div>
+          <div>
+            <h3>Pepper Bell - Bacterial Spot</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Bacterial infection causing dark spots on leaves and fruit, reducing yield and quality.</p>
+        <ul>
+          <li>Remove and destroy infected plants to prevent disease spread</li>
+          <li>Use copper-based fungicides to manage the disease</li>
+          <li>Practice crop rotation to reduce disease pressure</li>
+        </ul>
+      </div>
+
+      <div class="disease-card healthy">
+        <div class="disease-header">
+          <div class="disease-icon">🌶️</div>
+          <div>
+            <h3>Pepper Bell - Healthy</h3>
+            <span class="disease-type healthy">Healthy</span>
+          </div>
+        </div>
+        <ul>
+          <li>Maintain proper cultural practices including adequate watering and fertilization</li>
+          <li>Continue regular pest management to prevent diseases</li>
+          <li>Monitor plants regularly for early disease detection</li>
+        </ul>
+      </div>
+
+      <!-- Potato Diseases -->
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🥔</div>
+          <div>
+            <h3>Potato - Early Blight</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Fungal disease causing dark spots with concentric rings on leaves.</p>
+        <ul>
+          <li>Remove and destroy infected plant parts showing symptoms</li>
+          <li>Apply fungicides containing chlorothalonil or mancozeb</li>
+          <li>Practice crop rotation avoiding potatoes for several years</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🥔</div>
+          <div>
+            <h3>Potato - Late Blight</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Serious fungal disease that can destroy entire crops rapidly.</p>
+        <ul>
+          <li>Apply fungicides with mancozeb or copper-based products</li>
+          <li>Manage irrigation to minimize leaf wetness periods</li>
+          <li>Remove and destroy infected material promptly</li>
+        </ul>
+      </div>
+
+      <div class="disease-card healthy">
+        <div class="disease-header">
+          <div class="disease-icon">🥔</div>
+          <div>
+            <h3>Potato - Healthy</h3>
+            <span class="disease-type healthy">Healthy</span>
+          </div>
+        </div>
+        <ul>
+          <li>Implement proper soil drainage and plant spacing</li>
+          <li>Maintain cultural practices for healthy plants</li>
+          <li>Regular monitoring for pest and disease prevention</li>
+        </ul>
+      </div>
+
+      <!-- Tomato Diseases -->
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Bacterial Spot</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Bacterial infection causing dark lesions on leaves and fruit.</p>
+        <ul>
+          <li>Remove and destroy infected plant material</li>
+          <li>Apply copper-based fungicides preventatively</li>
+          <li>Practice crop rotation in affected areas</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Early Blight</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Fungal disease affecting lower leaves first with characteristic rings.</p>
+        <ul>
+          <li>Remove infected leaves especially near plant base</li>
+          <li>Apply chlorothalonil or mancozeb fungicides</li>
+          <li>Mulch around plants to reduce soil splashing</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Late Blight</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Devastating fungal disease affecting leaves, stems, and fruit.</p>
+        <ul>
+          <li>Apply chlorothalonil or mancozeb fungicides</li>
+          <li>Remove infected material promptly</li>
+          <li>Ensure good airflow to reduce humidity</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Leaf Mold</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Fungal disease thriving in humid conditions with characteristic mold.</p>
+        <ul>
+          <li>Improve ventilation by spacing and pruning plants</li>
+          <li>Avoid overhead irrigation to reduce leaf wetness</li>
+          <li>Apply copper or sulfur fungicides</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Septoria Leaf Spot</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Fungal disease causing small spots with gray centers on leaves.</p>
+        <ul>
+          <li>Remove and destroy infected leaves to reduce inoculum</li>
+          <li>Apply chlorothalonil or copper-based fungicides</li>
+          <li>Ensure proper spacing and ventilation</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Spider Mites</h3>
+            <span class="disease-type disease">Pest</span>
+          </div>
+        </div>
+        <p>Tiny pests that suck plant juices, causing stippling and webbing.</p>
+        <ul>
+          <li>Apply insecticidal soaps, neem oil, or horticultural oils</li>
+          <li>Use predatory mites for natural control</li>
+          <li>Avoid broad-spectrum insecticides harming beneficial insects</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Target Spot</h3>
+            <span class="disease-type disease">Disease</span>
+          </div>
+        </div>
+        <p>Fungal disease creating distinctive target-like spots on leaves.</p>
+        <ul>
+          <li>Remove and destroy infected leaves with target spot</li>
+          <li>Apply chlorothalonil or azoxystrobin fungicides</li>
+          <li>Improve air circulation through pruning and staking</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato Yellow Leaf Curl Virus</h3>
+            <span class="disease-type disease">Viral</span>
+          </div>
+        </div>
+        <p>Viral disease transmitted by whiteflies causing leaf curling and yellowing.</p>
+        <ul>
+          <li>Use resistant tomato varieties when available</li>
+          <li>Control whitefly populations with insecticides or reflective mulches</li>
+          <li>Remove and destroy infected plants</li>
+          <li>Implement good weed control practices</li>
+        </ul>
+      </div>
+
+      <div class="disease-card disease">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato Mosaic Virus</h3>
+            <span class="disease-type disease">Viral</span>
+          </div>
+        </div>
+        <p>Viral disease causing mottled, discolored leaves and reduced fruit quality.</p>
+        <ul>
+          <li>Remove and destroy infected plants immediately</li>
+          <li>Control aphid populations transmitting the virus</li>
+          <li>Use resistant tomato varieties if available</li>
+          <li>Practice good sanitation to prevent mechanical transmission</li>
+        </ul>
+      </div>
+
+      <div class="disease-card healthy">
+        <div class="disease-header">
+          <div class="disease-icon">🍅</div>
+          <div>
+            <h3>Tomato - Healthy</h3>
+            <span class="disease-type healthy">Healthy</span>
+          </div>
+        </div>
+        <ul>
+          <li>Maintain proper watering, fertilization, and pest management</li>
+          <li>Monitor plants regularly for signs of pests or diseases</li>
+          <li>Implement crop rotation to prevent pathogen buildup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-quote">"Farming is a profession of hope."</div>
+    <div class="footer-quote">"The best fertilizer is the farmer's shadow."</div>
+    <div style="margin-top: 1rem; opacity: 0.7;">© 2024 Fasal Arogya. All rights reserved.</div>
+  </footer>
+</body>
+</html>

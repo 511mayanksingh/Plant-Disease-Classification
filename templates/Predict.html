@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fasal Arogya</title>
+  <!--<link rel="stylesheet" type="text/css" href="style.css"> -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://4kwallpapers.com/images/wallpapers/lone-tree-agriculture-fields-sunset-evening-landscape-1920x1080-312.jpg');
+      background-attachment: fixed;
+      color: #ffffff;
+      overflow-y: auto;
+      max-height: calc(100vh - 140px); /* Enable vertical scrolling */
+    }
+
+    body {
+      margin: 0;
+      overflow-y: auto;
+      max-height: calc(100vh - 140px);
+    }
+
+    .moving-background {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #ff7e5f, #feb47b, #ffcc94, #f3f3f3);
+      animation: moveBackground 20s linear infinite;
+    }
+
+    @keyframes moveBackground {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+    
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #333;
+      padding: 10px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .result-box {
+            border: 2px solid #ccc;
+            color: #333;
+            background-color: #e4d2d2;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+    section {
+      margin: 20px;
+      text-align: center;
+    }
+
+    #upload-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.8); /* Background color for better readability */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #upload-btn-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      margin: 0 auto;
+        padding: 1em;
+      max-width: 400px;
+    }
+
+    #upload-btn-wrapper input[type=file] {
+      font-size: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+
+    #upload-btn-wrapper .btn {
+      border: 2px solid #4CAF50;
+      color: #4CAF50;
+      background-color: #fff;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    #upload-btn-wrapper .btn:hover {
+      color: #fff;
+      background-color: #4CAF50;
+      cursor: pointer;
+    }
+
+    .quote {
+      font-style: italic;
+      margin-top: 10px;
+      color: #333; /* Adjust text color for better visibility on the background */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fasal Arogya</h1>
+  </header>
+
+  <nav>
+    <a href="{{ url_for('Home') }}">Home</a>
+    <a href="{{ url_for('Predict') }}">Predict</a>
+    <a href="{{ url_for('About') }}">About Us</a>
+    <a href="{{ url_for('Login') }}">Login</a>
+  </nav>
+
+  <section>
+    <div id="upload-container">
+      <h2>Upload Crop Image</h2>
+      {% if image %}
+        <img src="data:image/png;base64,{{ image }}" alt="Uploaded Image">
+      {% endif %}
+      <form method="POST" enctype="multipart/form-data" action="/">
+        <div id="upload-btn-wrapper">
+          <button class="btn">Choose Image</button>
+          <input class="form-control" type="file" name="myfile">
+        </div>
+        <div id="predict-btn-wrapper">
+          <input class="btn btn-primary mt-3" type="submit" value="Predict Disease">
+        </div>
+      </form>
+    </div>
+  </section>
+  <script>
+    document.querySelector('input[type=file]').addEventListener('change', function () {
+      const fileInput = document.querySelector('input[type=file]');
+      const fileName = document.querySelector('.btn');
+      fileName.textContent = fileInput.files[0].name;
+    });
+  </script>
+  <section>
+    {% if prediction %}
+    <div id="prediction-container" class="result-box">
+      <h2>Prediction Output</h2>
+      <p class="text-center">Image is predicted as {{ prediction }}</p>
+      <nav>
+        <a href="{{ url_for('Info') }}" class="btn-know-more">Know More</a>
+      </nav>
+    </div>
+    {% endif %}
+  </section>
+  <footer>
+    <div class="footer">"Farming is a profession of hope."</div>
+  <div class="footer">"The best fertilizer is the farmer's shadow."</div>
+</footer>
+</body>
+</html>

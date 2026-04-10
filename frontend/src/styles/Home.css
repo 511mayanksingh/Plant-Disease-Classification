@@ -1,0 +1,128 @@
+.home {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f9fafb 0%, #e5e7eb 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 8s ease-in-out infinite;
+}
+
+.home::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 10s ease-in-out infinite reverse;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1) translate(10px, 10px);
+    opacity: 0.8;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.header h1 {
+  margin-bottom: 16px;
+  font-size: 3.5rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 40px 24px;
+  }
+
+  .header h1 {
+    font-size: 2.25rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .home::before,
+  .home::after {
+    width: 300px;
+    height: 300px;
+  }
+}
