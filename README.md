@@ -109,6 +109,9 @@ cd frontend
 # Install dependencies
 npm install
 ```
+4. **Download Trained Model**
+# Download from the following google drive link
+https://drive.google.com/file/d/1kRqvg5wy9T9fihZT3rBP8n4NZc5Op1VR/view?usp=sharing
 
 ### Running the Application
 
