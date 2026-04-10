@@ -109,7 +109,7 @@ cd frontend
 # Install dependencies
 npm install
 ```
-4. **Download Trained Model**
+4. **Download Trained Model and paste in root directory**
 ```bash
 https://drive.google.com/file/d/1kRqvg5wy9T9fihZT3rBP8n4NZc5Op1VR/view?usp=sharing
 ```
