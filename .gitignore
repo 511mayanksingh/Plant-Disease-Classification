@@ -89,3 +89,4 @@ Thumbs.db
 
 # Claude specific
 .claude/
+vggmodel.h5
